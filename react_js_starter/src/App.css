@@ -1,0 +1,26 @@
+.max-absolute {
+  position: absolute;
+  z-index: 9999;
+}
+
+.top-right {
+  top: 0;
+  right: 0;
+  padding: 0.2rem 0.5rem;
+  margin: 0.1rem 0.9rem;
+}
+
+.red-shadow {
+  box-shadow: inset 0px 0px 1rem 0.3rem red;
+  opacity: 0.3;
+}
+
+.twinkle-element {
+  animation: twinkle 3s linear infinite;
+}
+
+@keyframes twinkle {
+  0% { opacity: 0.3; }
+  50% { opacity: 0; }
+  100% { opacity: 0.3; }
+}

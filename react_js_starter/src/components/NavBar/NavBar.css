@@ -1,0 +1,11 @@
+.navbar-container {
+    display: flex;
+}
+
+.navbar-link {
+    margin: 1rem;
+}
+
+.nav-test {
+    color: red;
+}
