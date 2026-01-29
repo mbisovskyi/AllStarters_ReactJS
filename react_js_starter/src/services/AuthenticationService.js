@@ -11,7 +11,7 @@ import { API_BASE_URL, Anonymous, Authorized } from "../services/ApiService";
 const API_ENDPOINT_ACCOUNT = `${API_BASE_URL}/account`;
 const API_ENDPOINT_ACCOUNT_REGISTER = `${API_ENDPOINT_ACCOUNT}/register/`;
 const API_ENDPOINT_ACCOUNT_LOGIN = `${API_ENDPOINT_ACCOUNT}/login/`;
-const API_ENDPOINT_ACCOUNT_AUTHENTICATE = `${API_ENDPOINT_ACCOUNT}/authenticate`;
+const API_ENDPOINT_ACCOUNT_ME = `${API_ENDPOINT_ACCOUNT}/me`;
 
 const AuthenticationService = {
 
@@ -53,7 +53,7 @@ const AuthenticationService = {
      */
     async handleAccountAuthenticateAsync() {
         try {
-            let response = await Authorized.get(API_ENDPOINT_ACCOUNT_AUTHENTICATE);
+            let response = await Authorized.get(API_ENDPOINT_ACCOUNT_ME);
             if (response.data) {
                 const user = UserModel.parse(response.data);
                 AuthenticationContextRef.setUser(user);
