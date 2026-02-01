@@ -43,8 +43,11 @@ Authorized.interceptors.request.use(
 
 Authorized.interceptors.response.use(
     (response) => {
-        if (response.status === 200) {
-            return response;
+        switch (response.status) {
+            case 200:
+                return response;
+            default:
+                return null;
         }
     },
     (error) => handleError(error)
@@ -53,13 +56,46 @@ Authorized.interceptors.response.use(
 //#region Private Functions
 function handleError(error){
     const errors = error.response?.data?.errors;
-
     if (errors) {
         const flattenErrors = Object.values(errors).flat();
         ErrorContextRef.setFieldErrors(flattenErrors);
     }
 
+    const tokenError = error.response?.headers["token-error"];
+    if (tokenError) {
+        handleTokenError(tokenError, error.status);
+    }
+
     return Promise.reject(error);
+}
+
+function handleTokenError(tokenError, errorStatus){
+    switch (tokenError, errorStatus) {
+
+        case "expired", 401:
+            alert("Your session has expired. Please log in again.");
+            cleanStorage();
+            window.location.href = "/account/login";
+            break;
+
+        case "invalid", 401:
+            alert("Your session has expired. Please log in again.");
+            cleanStorage();
+            window.location.href = "/account/login";
+            break;
+
+        case "forbidden", 403:
+            window.location.href = "/forbidden";
+            break;
+
+        default:
+            break;
+    }
+}
+
+function cleanStorage(){
+    localStorage.removeItem("accessToken");
+    localStorage.removeItem("user");
 }
 
 //#endregion

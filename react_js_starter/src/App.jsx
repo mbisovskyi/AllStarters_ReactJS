@@ -14,6 +14,7 @@ import { RegisterAccountPage } from "./pages/RegisterAccountPage/RegisterAccount
 import { LoginAccountPage } from "./pages/LoginAccountPage/LoginAccountPage";
 import { AboutPage } from "./pages/AboutPage/AboutPage";
 import { TestPage } from "./pages/TestPage/TestPage";
+import { ForbiddenPage } from "./pages/ForbiddenPage/ForbiddenPage";
 
 import './App.css'
 function App() {
@@ -41,9 +42,11 @@ function App() {
         <Route path="/account/login" element={ <LoginAccountPage /> } />
         <Route path="/about" element={ <AboutPage /> } />
         <Route path="/test" element={ <TestPage/> } />
+        <Route path="/forbidden" element={ <ForbiddenPage /> } />
       </Routes>
     </>
   )
 }
+
 
 export default App
