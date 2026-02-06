@@ -1,11 +1,11 @@
 // React imports
-import { createContext, useState, useEffect } from "react";
+import { createContext, useContext, useState, useEffect } from "react";
 
 // Context imports
 import { AuthenticationContextRef } from "./refs/AuthenticationContextRef";
 
 // Create Context
-export const AuthenticationContext = createContext();
+export const AuthenticationContext = createContext(null);
 
 // Context Provider
 export function AuthenticationProvider({ children }){
@@ -55,6 +55,10 @@ export function AuthenticationProvider({ children }){
         </AuthenticationContext.Provider>
     )
 };
+
+export function useAuthentication() {
+    return useContext(AuthenticationContext);
+}
 
 export default AuthenticationContext;
        

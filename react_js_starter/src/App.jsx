@@ -1,12 +1,11 @@
 // React imports
-import { useContext, useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
-
-// Context imports
-import ErrorContext from "./contexts/ErrorContext";
 
 // Component imports
 import { NavBar } from './components/NavBar/NavBar';
+
+// System imports
+import { AnonymousRoute, ProtectedRoute } from "./system/Routes";
 
 // Page imports
 import { HomePage } from "./pages/HomePage/HomePage";
@@ -18,14 +17,8 @@ import { ForbiddenPage } from "./pages/ForbiddenPage/ForbiddenPage";
 
 import './App.css'
 function App() {
-
-  const { resetErrors } = useContext(ErrorContext);
-
   const applicationMode = import.meta.env.VITE_APP_MODE;
 
-    useEffect(() => {
-    resetErrors();
-  }, [])
   return (
     <>
       <div>
@@ -37,9 +30,9 @@ function App() {
 
       {/* Routes configuration goes below */}
       <Routes>
-        <Route path="/" element={ <HomePage/> } />
-        <Route path="/account/register" element={ <RegisterAccountPage /> } />
-        <Route path="/account/login" element={ <LoginAccountPage /> } />
+        <Route path="/" element={ <ProtectedRoute> <HomePage /> </ProtectedRoute> } />
+        <Route path="/account/register" element={ <AnonymousRoute> <RegisterAccountPage /> </AnonymousRoute> } />
+        <Route path="/account/login" element={ <AnonymousRoute> <LoginAccountPage /> </AnonymousRoute> } />
         <Route path="/about" element={ <AboutPage /> } />
         <Route path="/test" element={ <TestPage/> } />
         <Route path="/forbidden" element={ <ForbiddenPage /> } />

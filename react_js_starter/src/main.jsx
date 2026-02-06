@@ -5,15 +5,16 @@ import App from './App.jsx'
 import { BrowserRouter } from 'react-router-dom'
 import { AuthenticationProvider } from './contexts/AuthenticationContext.jsx'
 import { ErrorProvider } from './contexts/ErrorContext.jsx'
-import { ClearErrorsOnRouteChange } from './system/ClearErrorsOnRouteChange.jsx'
+import { PageLoadEffects } from './system/PageLoadEffects.jsx'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <BrowserRouter>
       <ErrorProvider>
         <AuthenticationProvider>
-          <ClearErrorsOnRouteChange/>
-          <App />
+          <PageLoadEffects>
+            <App />
+          </PageLoadEffects>
         </AuthenticationProvider>
       </ErrorProvider>
     </BrowserRouter>
