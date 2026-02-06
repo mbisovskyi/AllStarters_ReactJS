@@ -6,17 +6,24 @@ import { BrowserRouter } from 'react-router-dom'
 import { AuthenticationProvider } from './contexts/AuthenticationContext.jsx'
 import { ErrorProvider } from './contexts/ErrorContext.jsx'
 import { PageLoadEffects } from './system/PageLoadEffects.jsx'
+import AuthenticationService from './services/AuthenticationService.js';
 
-createRoot(document.getElementById('root')).render(
-  <StrictMode>
-    <BrowserRouter>
-      <ErrorProvider>
-        <AuthenticationProvider>
-          <PageLoadEffects>
-            <App />
-          </PageLoadEffects>
-        </AuthenticationProvider>
-      </ErrorProvider>
-    </BrowserRouter>
-  </StrictMode>,
-)
+async function bootstrap() {
+  await AuthenticationService.handleAccountVerifyAccess();
+
+  createRoot(document.getElementById('root')).render(
+    <StrictMode>
+      <BrowserRouter>
+        <ErrorProvider>
+          <AuthenticationProvider>
+            <PageLoadEffects>
+              <App />
+            </PageLoadEffects>
+          </AuthenticationProvider>
+        </ErrorProvider>
+      </BrowserRouter>
+    </StrictMode>,
+  );
+}
+
+bootstrap();

@@ -11,7 +11,8 @@ import { API_BASE_URL, Anonymous, Authorized } from "../services/ApiService";
 const API_ENDPOINT_ACCOUNT = `${API_BASE_URL}/account`;
 const API_ENDPOINT_ACCOUNT_REGISTER = `${API_ENDPOINT_ACCOUNT}/register/`;
 const API_ENDPOINT_ACCOUNT_LOGIN = `${API_ENDPOINT_ACCOUNT}/login/`;
-const API_ENDPOINT_ACCOUNT_ME = `${API_ENDPOINT_ACCOUNT}/me`;
+const API_ENDPOINT_ACCOUNT_ME = `${API_ENDPOINT_ACCOUNT}/me/`;
+const API_ENDPOINT_ACCOUNT_VERIFY_ACCESS = `${API_ENDPOINT_ACCOUNT}/verify-access/`;
 
 const AuthenticationService = {
 
@@ -69,7 +70,60 @@ const AuthenticationService = {
      */
     async handleAccountLogout(){
         AuthenticationContextRef.setLogout(true);
+    },
+
+    /**
+     * Handles GET method call to the API account verify access endpoint to verify access token validity.
+     */
+    async handleAccountVerifyAccess() {     
+        try {
+            const response = await Authorized.get(API_ENDPOINT_ACCOUNT_VERIFY_ACCESS);
+        } catch (error) {
+            handleError(error);
+        }
     }
 }
+
+//#region Authentication Error Handlers
+
+function handleError(error) {
+    
+    const tokenError = error.response?.headers["token-error"];
+    if (tokenError) {
+        handleTokenError(tokenError, error.status);
+    }
+}
+
+function handleTokenError(tokenError, errorStatus){
+    switch (true) {
+
+        case (tokenError === "expired" || tokenError === "invalid") && errorStatus === 401:
+            setTimeout(() => {
+                alert("Your session has expired. Please log in again.");
+                cleanStorage();
+                window.location.href = "/account/login";
+            }, 50);
+
+            break;
+
+        case tokenError === "invalid" && errorStatus === 403:
+            window.location.href = "/forbidden";
+            break;
+
+        default:
+            break;
+    }
+}
+
+//#endregion
+
+//#region Private Functions
+
+function cleanStorage(){
+    localStorage.removeItem("accessToken");
+    localStorage.removeItem("user");
+}
+
+//#endregion
 
 export default AuthenticationService;
