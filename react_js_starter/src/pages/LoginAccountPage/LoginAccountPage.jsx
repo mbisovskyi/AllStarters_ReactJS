@@ -12,7 +12,7 @@ import "./LoginAccountPage.css";
 export function LoginAccountPage(){
 
     // Form fields
-    const defaultFormData = { email: "", password: "" };
+    const defaultFormData = { email: "", password: "", rememberMe: false };
 
     // useCustomForm handlers
     const [formData, handleOnSubmit, handleOnChange] = useCustomForm(defaultFormData, AuthenticationService.handleAccountLoginAsync)
@@ -36,6 +36,10 @@ export function LoginAccountPage(){
                     {/* Password field */}
                     <label>Password</label>
                     <input type="password" name="password" value={ formData.password } onChange={ handleOnChange }/>
+
+                    {/* Remember Me checkbox */}
+                    <label>Remember Me</label>
+                    <input type="checkbox" name="rememberMe" value={ formData.rememberMe } onChange={ handleOnChange }/>
 
                     <button type="submit">Submit</button>
                 </form>

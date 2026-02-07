@@ -19,9 +19,6 @@ export function AuthenticationProvider({ children }){
     AuthenticationContextRef.setAccessToken = setAccessToken; 
     AuthenticationContextRef.accessToken = accessToken;
 
-    const [logout, setLogout] = useState(false);
-    AuthenticationContextRef.setLogout = setLogout;
-
     // Hydrating context values from local storage
     useEffect(() => {
         const storedAccessToken = localStorage.getItem("accessToken");
@@ -30,17 +27,6 @@ export function AuthenticationProvider({ children }){
         if (storedAccessToken) setAccessToken(storedAccessToken);
         if (storedUser) setUser(storedUser);
     }, [])
-
-    // Handle Logout event
-    useEffect(() => {
-        if (logout) {
-            setAccessToken(null);
-            setUser(null);
-
-            localStorage.removeItem("accessToken");
-            localStorage.removeItem("user");
-        }
-    }, [logout])
 
     // Available Context Data
     const contextData = {

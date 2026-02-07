@@ -11,7 +11,14 @@ export default function useCustomForm(defaultData = {}, onSubmit){
 
     function handleOnChange(e){
         e.persist();
-        setFormData({...formData, [e.target.name]: e.target.value });
+        switch (e.target.type) {
+            case "checkbox":
+                setFormData({...formData, [e.target.name]: e.target.checked });
+                break;
+            default:
+                setFormData({...formData, [e.target.name]: e.target.value });
+                break;
+        }
     }
 
     function handleReset(){

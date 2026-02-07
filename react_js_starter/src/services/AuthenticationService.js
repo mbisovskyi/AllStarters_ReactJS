@@ -69,7 +69,9 @@ const AuthenticationService = {
      * Handles account logout process.
      */
     async handleAccountLogout(){
-        AuthenticationContextRef.setLogout(true);
+        AuthenticationContextRef.setUser(null);
+        AuthenticationContextRef.setAccessToken(null);
+        cleanStorage();
     },
 
     /**

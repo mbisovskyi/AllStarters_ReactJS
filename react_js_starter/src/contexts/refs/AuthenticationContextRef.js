@@ -6,5 +6,4 @@ export const AuthenticationContextRef = {
     // Functions
     setUser: () => {},
     setAccessToken: () => {},
-    setLogout: () => {},
 }
